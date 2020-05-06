@@ -5,14 +5,10 @@ using System.Threading.Tasks;
 
 namespace TruckProject.DTO
 {
-    public class TruckForCreationDTO
+    public class TruckForCreationDTO:TruckForManipulationDTO
     {
-        public string Brand { get; set; }
-        public string Model { get; set; }
+        
         public int YearGraduation { get; set; }
-        public double Price { get; set; }
 
-        public string RegistrationPlate { get; set; }
-        public string ImagePath { get; set; }
     }
 }
