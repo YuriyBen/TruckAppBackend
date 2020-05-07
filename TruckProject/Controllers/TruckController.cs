@@ -39,7 +39,6 @@ namespace TruckProject.Controllers
             {
                 trucks = _logicRepository.GetTrucks(trucksByParameters);
             }
-            //IEnumerable<TruckDTO> trucks = _logicRepository.GetTrucks(trucksByParameters);
             trucks = trucks.OrderBy(p => p.GetType().GetProperty(trucksByParameters.SortBy).GetValue(p)).ToList();
 
             return Ok(trucks);

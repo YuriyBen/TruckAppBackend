@@ -42,10 +42,11 @@ namespace TruckProject.Services
             var trucksFromContext =  _context.Truck.ToList();
 
             var trucksToCheck = _mapper.Map<IEnumerable<TruckDTO>>(trucksFromContext).ToList();
+            
+            var trucksToReturn = new List<TruckDTO>();
 
             if(!string.IsNullOrWhiteSpace(trucksByParameters.SearchQuery))
             {
-                var trucksToReturn = new List<TruckDTO>();
 
                 foreach (var item in trucksToCheck)
                 {
@@ -54,11 +55,9 @@ namespace TruckProject.Services
                         trucksToReturn.Add(item);
                     }
                 }
-                trucksToCheck = trucksToReturn;
             }
 
-            //trucksToCheck = trucksToCheck.OrderByDescending(p => p.GetType().GetProperty(trucksByParameters.SortBy).GetValue(p)).ToList();
-            return trucksToCheck;
+            return trucksToReturn;
         }
 
         public TruckDTO CreateTruck(TruckForCreationDTO truckForCreation)
