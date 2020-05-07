@@ -43,16 +43,22 @@ namespace TruckProject.Services
 
             var trucksToCheck = _mapper.Map<IEnumerable<TruckDTO>>(trucksFromContext).ToList();
 
-            var trucksToReturn = new List<TruckDTO>();
-
-            foreach (var item in trucksToCheck)
+            if(!string.IsNullOrWhiteSpace(trucksByParameters.SearchQuery))
             {
-                if (item.ToString().ToUpper().Contains(trucksByParameters.SearchQuery.ToUpper()))
+                var trucksToReturn = new List<TruckDTO>();
+
+                foreach (var item in trucksToCheck)
                 {
-                    trucksToReturn.Add(item);
+                    if (item.ToString().ToUpper().Contains(trucksByParameters.SearchQuery.ToUpper()))
+                    {
+                        trucksToReturn.Add(item);
+                    }
                 }
+                trucksToCheck = trucksToReturn;
             }
-            return trucksToReturn;
+
+            //trucksToCheck = trucksToCheck.OrderByDescending(p => p.GetType().GetProperty(trucksByParameters.SortBy).GetValue(p)).ToList();
+            return trucksToCheck;
         }
 
         public TruckDTO CreateTruck(TruckForCreationDTO truckForCreation)
@@ -115,7 +121,8 @@ namespace TruckProject.Services
             TruckDTO truckToReturn = GetTruckById(TruckId);
 
             truckToReturn = truck;
-
+            
+            // return truck;
         }
 
         void IsPresent(long TruckId) 

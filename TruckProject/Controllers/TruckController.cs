@@ -25,7 +25,7 @@ namespace TruckProject.Controllers
 
         }
 
-        [HttpGet("Query")]
+        [HttpGet]
         public ActionResult<IEnumerable<TruckDTO>> GetTrucks(
             [FromQuery] SearchTrucksByParameters trucksByParameters)
         {
@@ -39,15 +39,12 @@ namespace TruckProject.Controllers
             {
                 trucks = _logicRepository.GetTrucks(trucksByParameters);
             }
+            //IEnumerable<TruckDTO> trucks = _logicRepository.GetTrucks(trucksByParameters);
+            trucks = trucks.OrderBy(p => p.GetType().GetProperty(trucksByParameters.SortBy).GetValue(p)).ToList();
 
             return Ok(trucks);
         }
-        [HttpGet]
-        public ActionResult<IEnumerable<TruckDTO>> GetTrucks()
-        {
-            var trucks = _logicRepository.GetTrucks();
-            return Ok(trucks);
-        }
+
 
         [HttpGet("{TruckId}", Name = "GetTruck")]
         public ActionResult<TruckDTO> GetTruck(long TruckId)
@@ -64,7 +61,7 @@ namespace TruckProject.Controllers
         public ActionResult<TruckDTO> PostTruck(TruckForCreationDTO truckForCreation)
         {
             var truckToReturn = _logicRepository.CreateTruck(truckForCreation);
-            //_logicRepository.Save();
+            _logicRepository.Save();
 
             return Ok(truckToReturn);
         }
@@ -72,15 +69,16 @@ namespace TruckProject.Controllers
         public IActionResult RemoveTruck(long TruckId)
         {
             _logicRepository.RemoveTruck(TruckId);
-            //_logicRepository.Save();
+            _logicRepository.Save();
             return Ok();
         }
         [HttpPut("{TruckId}")]
-        public IActionResult UpdateTruck(long TruckId, [FromBody] TruckDTO truck)
+        public IActionResult UpdateTruck(long TruckId, TruckDTO truck)
         {
             _logicRepository.UpdateTruck(TruckId, truck);
+            _logicRepository.Save();
 
-            return Ok(truck);
+            return Ok();
         }
     }
 }
