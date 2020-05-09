@@ -7,6 +7,6 @@ namespace TruckProject.DTO
 {
     public class TruckForCreationDTO:TruckForManipulationDTO
     {
-        public int YearGraduation { get; set; }
+        
     }
 }

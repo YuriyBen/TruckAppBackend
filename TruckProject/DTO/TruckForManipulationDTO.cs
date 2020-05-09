@@ -10,6 +10,7 @@ namespace TruckProject.DTO
         public double PriceUSD { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
+        public int YearGraduation { get; set; }
         public string RegistrationPlate { get; set; }
         public string ImagePath { get; set; }
     }
