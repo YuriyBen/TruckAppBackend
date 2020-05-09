@@ -18,23 +18,9 @@ namespace TruckProject.Helpers
         }
         public static string FormatCarNumbers(this string number)
         {
-            string correctNumber = "";
-
-            for (int i = 0; i < 2; i++)
-            {
-                correctNumber += number[i];
-            }
-            correctNumber += " ";
-            for (int i = 2; i < 6; i++)
-            {
-                correctNumber += number[i];
-            }
-            correctNumber += " ";
-            for (int i = 6; i < 8; i++)
-            {
-                correctNumber += number[i];
-            }
-            return correctNumber;
+            number = number.Replace(" ", "");
+            string correct = number.Substring(0, 2) + " " + number.Substring(2, 4) + " " + number.Substring(6, 2);
+            return correct.ToUpper();
         }
     }
 }

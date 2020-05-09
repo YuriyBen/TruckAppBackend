@@ -17,9 +17,7 @@ namespace TruckProject.Profiles
                 .ForMember(
                     dest => dest.AmountYear,
                     opt => opt.MapFrom(src => src.YearGraduation.GetCurrentAge()))
-                .ForMember(
-                    dest => dest.RegistrationPlate,
-                    opt => opt.MapFrom(src => src.RegistrationPlate.FormatCarNumbers()))
+                
                 .ForMember(
                     dest => dest.PriceUSD,
                     opt => opt.MapFrom(src => src.Price))
@@ -36,7 +34,10 @@ namespace TruckProject.Profiles
                     opt => opt.MapFrom(src => $"{src.BrandSearch.GetCountry()}"))
                 .ForMember(
                     dest => dest.Price,
-                    opt => opt.MapFrom(src => src.PriceUSD));
+                    opt => opt.MapFrom(src => src.PriceUSD))
+                .ForMember(
+                    dest => dest.RegistrationPlate,
+                    opt => opt.MapFrom(src => src.RegistrationPlate.FormatCarNumbers()));
 
         }
     }
