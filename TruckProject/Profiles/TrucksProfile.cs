@@ -33,7 +33,7 @@ namespace TruckProject.Profiles
             CreateMap<TruckForCreationDTO, Truck>()
                 .ForMember(
                     dest => dest.Country,
-                    opt => opt.MapFrom(src => $"{src.Brand.GetCountry()}"))
+                    opt => opt.MapFrom(src => $"{src.BrandSearch.GetCountry()}"))
                 .ForMember(
                     dest => dest.Price,
                     opt => opt.MapFrom(src => src.PriceUSD));

@@ -7,6 +7,7 @@ namespace TruckProject.DTO
 {
     public class TruckForCreationDTO:TruckForManipulationDTO
     {
-        
+        public string BrandSearch { get; set; }
+
     }
 }

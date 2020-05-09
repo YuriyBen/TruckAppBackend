@@ -13,7 +13,8 @@ namespace TruckProject.DTO
        
         public string Country { get; set; }
         public int AmountYear { get; set; }
-        
+
+
         public double PriceEUR { get; set; }
         public double PriceUAH { get; set; }
        
