@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TruckProject.DTO;
+using TruckProject.Helpers;
 using TruckProject.Models;
 using TruckProject.ResourceParameters;
 using TruckProject.Services;
@@ -17,12 +19,13 @@ namespace TruckProject.Controllers
     public class TruckController : ControllerBase
     {
         private readonly ITruckLogicRepository _logicRepository;
+        private readonly IMapper _mapper;
 
-        public TruckController(ITruckLogicRepository logicRepository)
+        public TruckController(ITruckLogicRepository logicRepository,IMapper mapper)
         {
             _logicRepository = logicRepository ??
                 throw new ArgumentNullException(nameof(logicRepository));
-
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -72,12 +75,13 @@ namespace TruckProject.Controllers
             return Ok();
         }
         [HttpPut("{TruckId}")]
-        public IActionResult UpdateTruck(long TruckId, TruckDTO truck)
+        public void UpdateTruck(long TruckId, [FromBody] TruckForUpdating truck)
         {
-            _logicRepository.UpdateTruck(TruckId, truck);
+            TruckDTO truckToReturn = _logicRepository.UpdateTruck(TruckId, truck);
             _logicRepository.Save();
 
-            return Ok();
+            //return Ok(truckToReturn);
         }
+
     }
 }

@@ -13,7 +13,7 @@ namespace TruckProject.Services
         TruckDTO CreateTruck(TruckForCreationDTO truckForCreation);
         TruckDTO GetTruckById(long TruckId);
         void RemoveTruck(long TruckId);
-        void UpdateTruck(long TruckId, TruckDTO truck);
+        TruckDTO UpdateTruck(long TruckId, TruckForUpdating truck);
         bool Save();
         void Dispose();
 

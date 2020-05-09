@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TruckProject.DTO;
+using TruckProject.Helpers;
 using TruckProject.Models;
 using TruckProject.ResourceParameters;
 
@@ -24,7 +25,6 @@ namespace TruckProject.Services
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
-
 
         public IEnumerable<TruckDTO> GetTrucks()
         {
@@ -47,7 +47,6 @@ namespace TruckProject.Services
 
             if(!string.IsNullOrWhiteSpace(trucksByParameters.SearchQuery))
             {
-
                 foreach (var item in trucksToCheck)
                 {
                     if (item.ToString().ToUpper().Contains(trucksByParameters.SearchQuery.ToUpper()))
@@ -56,7 +55,6 @@ namespace TruckProject.Services
                     }
                 }
             }
-
             return trucksToReturn;
         }
 
@@ -66,7 +64,6 @@ namespace TruckProject.Services
             {
                 throw new ArgumentNullException(nameof(truckForCreation));
             }
-
             var truck = _mapper.Map<Truck>(truckForCreation);
             _context.Truck.Add(truck);
 
@@ -82,7 +79,6 @@ namespace TruckProject.Services
             return truckToReturn;
 
         }
-
 
         public bool Save()
         {
@@ -108,20 +104,24 @@ namespace TruckProject.Services
             IsPresent(TruckId);
 
             var truckContext = _context.Truck;
-
             var truck = truckContext.FirstOrDefault(t => t.Id == TruckId);
 
             truckContext.Remove(truck);
         }
-        public void UpdateTruck(long TruckId, TruckDTO truck)
+
+        public TruckDTO UpdateTruck(long TruckId, TruckForUpdating truck)
         {
             IsPresent(TruckId);
 
             TruckDTO truckToReturn = GetTruckById(TruckId);
 
-            truckToReturn = truck;
-            
-            // return truck;
+            truckToReturn.PriceUSD = truck.PriceUSD;
+            truckToReturn.Model = truck.Model;
+            truckToReturn.AmountYear = truck.YearGraduation.GetCurrentAge();
+
+
+
+            return truckToReturn;
         }
 
         void IsPresent(long TruckId) 
@@ -131,5 +131,6 @@ namespace TruckProject.Services
                 throw new Exception("Not found result..");
             }
         }
+
     }
 }
