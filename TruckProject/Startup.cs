@@ -39,7 +39,7 @@ namespace TruckProject
             services.AddDbContext<AutomobileContext>(options =>
             {
                 options.UseSqlServer(
-                    @"Data Source=localhost;Initial Catalog=Automobile;Integrated Security=True");
+                    "Name=TruckDB");
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
