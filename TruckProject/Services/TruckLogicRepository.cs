@@ -109,7 +109,7 @@ namespace TruckProject.Services
             truckContext.Remove(truck);
         }
 
-        public TruckDTO UpdateTruck(long TruckId, TruckForUpdating truck)
+        public  void UpdateTruck(long TruckId, TruckForUpdating truck)
         {
             IsPresent(TruckId);
 
@@ -117,12 +117,33 @@ namespace TruckProject.Services
 
             truckToReturn.PriceUSD = truck.PriceUSD;
             truckToReturn.Model = truck.Model;
-            truckToReturn.AmountYear = truck.YearGraduation.GetCurrentAge();
+            truckToReturn.YearGraduation = truck.YearGraduation;
 
-
-
-            return truckToReturn;
+            var truckToUpdate = _mapper.Map<Truck>(truckToReturn);
+            Save();
         }
+        //public async void UpdateTruck(long TruckId, TruckForUpdating truck)
+        //{
+        //    // IsPresent(TruckId);
+
+        //    //TruckDTO truckToReturn = GetTruckById(TruckId);
+
+        //    if (!_context.Truck.Any(t => t.Id == TruckId))
+        //    {
+        //        throw new Exception("Not found result..");
+        //    }
+        //    var truckFromRepo = _context.Truck.FirstOrDefault(t => t.Id == TruckId);
+        //    //
+        //    truckFromRepo.Price = truck.PriceUSD;
+        //    truckFromRepo.Model = truck.Model;
+        //    truckFromRepo.YearGraduation = truck.YearGraduation;
+        //    _context.Truck.Update(truckFromRepo);
+        //    await _context.SaveChangesAsync();
+        //    var test = _context.Truck.FirstOrDefault(t => t.Id == TruckId);
+
+        //    //Save();
+        //    //return truckFromRepo;
+        //}
 
         void IsPresent(long TruckId) 
         {

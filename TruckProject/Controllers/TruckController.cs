@@ -77,8 +77,8 @@ namespace TruckProject.Controllers
         [HttpPut("{TruckId}")]
         public void UpdateTruck(long TruckId, [FromBody] TruckForUpdating truck)
         {
-            TruckDTO truckToReturn = _logicRepository.UpdateTruck(TruckId, truck);
-            _logicRepository.Save();
+             _logicRepository.UpdateTruck(TruckId, truck);
+            //_logicRepository.Save();
 
             //return Ok(truckToReturn);
         }

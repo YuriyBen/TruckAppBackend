@@ -39,6 +39,10 @@ namespace TruckProject.Profiles
                     dest => dest.RegistrationPlate,
                     opt => opt.MapFrom(src => src.RegistrationPlate.FormatCarNumbers()));
 
+            CreateMap<TruckDTO, Truck>()
+                .ForMember(
+                    dest => dest.Price,
+                    opt => opt.MapFrom(src => src.PriceUSD));
         }
     }
 }
