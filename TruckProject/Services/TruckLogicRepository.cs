@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,24 +110,40 @@ namespace TruckProject.Services
             truckContext.Remove(truck);
         }
 
-        public  void UpdateTruck(long TruckId, TruckForUpdating truck)
+        public void UpdateTruck(long TruckId, TruckForUpdating truck)
         {
             IsPresent(TruckId);
 
-            TruckDTO truckToReturn = GetTruckById(TruckId);
+            //TruckDTO truckToUpdate = GetTruckById(TruckId);
+            //var truckToReturn = _mapper.Map<Truck>(truckToUpdate);
 
-            truckToReturn.PriceUSD = truck.PriceUSD;
-            truckToReturn.Model = truck.Model;
-            truckToReturn.YearGraduation = truck.YearGraduation;
+            //truckToReturn.Price = truck.PriceUSD;
+            //truckToReturn.Model = truck.Model;
+            //truckToReturn.YearGraduation = truck.YearGraduation;
 
-            var truckToUpdate = _mapper.Map<Truck>(truckToReturn);
+            //Save();
+            //_context.Truck.Update(truckToUpdate);
+
+
+            ////var entry = _context.Truck.First(e => e.Id == entity.Id);
+            //_context.Entry(truckToReturn).CurrentValues.SetValues(truckToReturn);
+            //_context.SaveChanges();
+            //var author = _context.Truck.FromSqlRaw($"UPDATE avto.Truck " +
+            //                        $"SET Price = {truck.PriceUSD}," +
+            //                        $"Model = {truck.Model}" +
+            //                        $"YearGraduation = {truck.YearGraduation}" +
+            //                        $"WHERE Id = 2;").FirstOrDefault();
+
+            _context.Database.ExecuteSqlRaw($"UPDATE avto.Truck " +
+                                    $"SET Price = {truck.PriceUSD}," +
+                                    $"Model = '{truck.Model}'," +
+                                    $"YearGraduation = {truck.YearGraduation}" +
+                                    $"WHERE Id = {TruckId};");
             Save();
         }
+
         //public async void UpdateTruck(long TruckId, TruckForUpdating truck)
         //{
-        //    // IsPresent(TruckId);
-
-        //    //TruckDTO truckToReturn = GetTruckById(TruckId);
 
         //    if (!_context.Truck.Any(t => t.Id == TruckId))
         //    {
@@ -137,12 +154,11 @@ namespace TruckProject.Services
         //    truckFromRepo.Price = truck.PriceUSD;
         //    truckFromRepo.Model = truck.Model;
         //    truckFromRepo.YearGraduation = truck.YearGraduation;
-        //    _context.Truck.Update(truckFromRepo);
+        //    _context.Truck.Update(_mapper.Map<Truck>(truckFromRepo));
         //    await _context.SaveChangesAsync();
         //    var test = _context.Truck.FirstOrDefault(t => t.Id == TruckId);
 
-        //    //Save();
-        //    //return truckFromRepo;
+
         //}
 
         void IsPresent(long TruckId) 

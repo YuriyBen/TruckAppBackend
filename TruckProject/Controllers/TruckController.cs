@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TruckProject.DTO;
 using TruckProject.Helpers;
@@ -77,7 +79,9 @@ namespace TruckProject.Controllers
         [HttpPut("{TruckId}")]
         public void UpdateTruck(long TruckId, [FromBody] TruckForUpdating truck)
         {
-             _logicRepository.UpdateTruck(TruckId, truck);
+            
+
+            _logicRepository.UpdateTruck(TruckId, truck);
             //_logicRepository.Save();
 
             //return Ok(truckToReturn);
