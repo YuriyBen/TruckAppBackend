@@ -19,7 +19,7 @@ namespace TruckProject.Models
         public string Role { get; set; }
         public string RegistrationToken { get; set; }
         public string ImagePath { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string Sex { get; set; }
         public string Country { get; } = RegionInfo.CurrentRegion.DisplayName;
 

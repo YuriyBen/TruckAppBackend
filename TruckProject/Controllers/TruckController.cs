@@ -21,13 +21,12 @@ namespace TruckProject.Controllers
     public class TruckController : ControllerBase
     {
         private readonly ITruckLogicRepository _logicRepository;
-        private readonly IMapper _mapper;
 
         public TruckController(ITruckLogicRepository logicRepository,IMapper mapper)
         {
             _logicRepository = logicRepository ??
                 throw new ArgumentNullException(nameof(logicRepository));
-            _mapper = mapper;
+           
         }
 
         [HttpGet]
