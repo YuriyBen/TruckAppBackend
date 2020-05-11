@@ -114,32 +114,11 @@ namespace TruckProject.Services
         {
             IsPresent(TruckId);
 
-            //TruckDTO truckToUpdate = GetTruckById(TruckId);
-            //var truckToReturn = _mapper.Map<Truck>(truckToUpdate);
-
-            //truckToReturn.Price = truck.PriceUSD;
-            //truckToReturn.Model = truck.Model;
-            //truckToReturn.YearGraduation = truck.YearGraduation;
-
-            //Save();
-            //_context.Truck.Update(truckToUpdate);
-
-
-            ////var entry = _context.Truck.First(e => e.Id == entity.Id);
-            //_context.Entry(truckToReturn).CurrentValues.SetValues(truckToReturn);
-            //_context.SaveChanges();
-            //var author = _context.Truck.FromSqlRaw($"UPDATE avto.Truck " +
-            //                        $"SET Price = {truck.PriceUSD}," +
-            //                        $"Model = {truck.Model}" +
-            //                        $"YearGraduation = {truck.YearGraduation}" +
-            //                        $"WHERE Id = 2;").FirstOrDefault();
-
             _context.Database.ExecuteSqlRaw($"UPDATE avto.Truck " +
                                     $"SET Price = {truck.PriceUSD}," +
                                     $"Model = '{truck.Model}'," +
                                     $"YearGraduation = {truck.YearGraduation}" +
                                     $"WHERE Id = {TruckId};");
-            Save();
         }
 
         //public async void UpdateTruck(long TruckId, TruckForUpdating truck)

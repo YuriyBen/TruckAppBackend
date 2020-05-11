@@ -17,7 +17,7 @@ namespace TruckProject.DTO
        
         public override string ToString()
         {
-            return $"{Brand} {Model} {Country} {AmountYear} {PriceUSD} {PriceEUR} {PriceUAH} {RegistrationPlate} {ImagePath}";
+            return $"{Brand} {Model} {Country} {YearGraduation} {AmountYear} {PriceUSD} {PriceEUR} {PriceUAH} {RegistrationPlate}";
         }
 
     }
