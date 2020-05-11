@@ -17,7 +17,6 @@ namespace TruckProject.Helpers
             }
             return currentAge;
         }
-
         public static int GetCurrentAge(this int YearGraduation)
         {
             int currentAge = DateTime.UtcNow.Year - YearGraduation;

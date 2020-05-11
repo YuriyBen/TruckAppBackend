@@ -32,8 +32,9 @@ namespace TruckProject.Controllers
 
         }
 
-        [HttpGet()]
-        public ActionResult<UserDTO> GetCurrentUser(UserAuthorization user)
+        //[HttpGet()]
+        [HttpPost("login")]
+        public ActionResult<UserDTO> GetUserAfterLogIn(UserAuthorization user)
         {
             if(!_context.Users.Any(u=>u.Email==user.Email && u.PasswordHash==user.Password))
             {
@@ -42,6 +43,16 @@ namespace TruckProject.Controllers
             var userToReturn = _context.Users.FirstOrDefault(u => u.Email == user.Email &&
                                                              u.PasswordHash == user.Password);
             return Ok(_mapper.Map<UserDTO>(userToReturn));
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<UserDTO>> GettAllUsers()
+        {
+            var usersList = _context.Users.Where(u => u.Role != "admin").ToList();
+
+            var listToReturn = _mapper.Map<IEnumerable<UserDTO>>(usersList);
+
+            return Ok(listToReturn);
         }
 
     }

@@ -13,7 +13,7 @@ namespace TruckProject.DTO
         public string Email { get; set; }
         public string Role { get; set; }
         public string ImagePath { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public int Years { get; set; }
         public string Sex { get; set; }
         public string Country { get; } = RegionInfo.CurrentRegion.EnglishName;

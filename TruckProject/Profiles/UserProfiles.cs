@@ -22,7 +22,7 @@ namespace TruckProject.Profiles
                     opt => opt.MapFrom(src => src.DateOfBirth.GetCurrentAge()))
                 .ForMember(
                     dest => dest.DateOfBirth,
-                    opt => opt.MapFrom(src => src.DateOfBirth.Date));
+                    opt => opt.MapFrom(src => src.DateOfBirth.ToShortDateString()));
         }
     }
 }
