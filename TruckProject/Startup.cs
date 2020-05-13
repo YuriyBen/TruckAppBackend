@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using TruckProject.Models;
 using TruckProject.Services;
 
@@ -28,9 +29,15 @@ namespace TruckProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options => options.AddPolicy("AllowEverything", builer => builer.AllowAnyOrigin()
-                                                                                           .AllowAnyMethod()
-                                                                                           .AllowAnyHeader()));
+            var AllowedOrigins = Configuration.GetValue<string>("AllowedOrigins")?.Split(",") ?? new string[0];
+            
+            services.AddCors(options => options.AddPolicy("GlobomenticsInternal", 
+                             builer => builer.WithOrigins(AllowedOrigins)
+                                             .AllowAnyMethod()
+                                             .WithHeaders("Content-Type")
+                                             .AllowCredentials()
+                                             .SetPreflightMaxAge(TimeSpan.FromMinutes(1)) ));
+
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
@@ -38,13 +45,16 @@ namespace TruckProject
             });
             services.AddDbContext<AutomobileContext>(options =>
             {
-                options.UseSqlServer(
-                    "Name=TruckDB");
+                options.UseSqlServer(Configuration.GetConnectionString("TruckDB"));
+                    //"Name=TruckDB");
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<ITruckLogicRepository, TruckLogicRepository>();
+            services.AddMvc(option =>option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,9 +65,9 @@ namespace TruckProject
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("AllowEverything");
-
             app.UseRouting();
+
+            app.UseCors("GlobomenticsInternal");
 
             app.UseAuthorization();
 

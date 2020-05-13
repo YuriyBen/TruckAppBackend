@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TruckProject.DTO;
 using TruckProject.Models;
 using TruckProject.ResourceParameters;
@@ -36,6 +37,7 @@ namespace TruckProject.Controllers
         [HttpPost("login")]
         public ActionResult<UserDTO> GetUserAfterLogIn(UserAuthorization user)
         {
+            
             if(!_context.Users.Any(u=>u.Email==user.Email && u.PasswordHash==user.Password))
             {
                 return NotFound();
@@ -48,7 +50,7 @@ namespace TruckProject.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<UserDTO>> GettAllUsers()
         {
-            var usersList = _context.Users.Where(u => u.Role != "admin").ToList();
+            var usersList = _context.Users.Include(x=>x.Truck).Where(u => u.Role != "admin").ToList();
 
             var listToReturn = _mapper.Map<IEnumerable<UserDTO>>(usersList);
 

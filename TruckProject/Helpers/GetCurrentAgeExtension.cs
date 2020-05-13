@@ -9,9 +9,10 @@ namespace TruckProject.Helpers
     {
         public static int GetCurrentAge(this DateTime dateTime)
         {
+            var currentDate = DateTime.Now;
             int currentAge = DateTime.UtcNow.Year - dateTime.Year;
 
-            if(dateTime.Year+currentAge > DateTime.UtcNow.Year)
+            if (currentDate < dateTime.AddYears(currentAge))
             {
                 currentAge--;
             }

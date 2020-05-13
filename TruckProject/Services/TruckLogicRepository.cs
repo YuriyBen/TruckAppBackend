@@ -29,8 +29,8 @@ namespace TruckProject.Services
 
         public IEnumerable<TruckDTO> GetTrucks()
         {
-            var trucks =  _context.Truck.ToList();
-            var trucksToReturn = _mapper.Map <IEnumerable<TruckDTO>>(trucks);
+            var trucks =  _context.Truck/*.Include(x=>x.User)*/.ToList();
+            var trucksToReturn = _mapper.Map<IEnumerable<TruckDTO>>(trucks);
             return trucksToReturn;
         }
         public IEnumerable<TruckDTO> GetTrucks(SearchTrucksByParameters trucksByParameters)

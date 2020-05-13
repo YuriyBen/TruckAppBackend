@@ -18,11 +18,15 @@ namespace TruckProject.Profiles
                     dest => dest.FullName,
                     opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
                 .ForMember(
-                    dest => dest.Years,
+                    dest => dest.Age,
                     opt => opt.MapFrom(src => src.DateOfBirth.GetCurrentAge()))
                 .ForMember(
                     dest => dest.DateOfBirth,
-                    opt => opt.MapFrom(src => src.DateOfBirth.ToShortDateString()));
+                    opt => opt.MapFrom(src => src.DateOfBirth.ToShortDateString()))
+                //.ForMember(
+                //    dest => dest.Truck,
+                //    opt => opt.MapFrom(src => src.Truck))
+                ;
         }
     }
 }

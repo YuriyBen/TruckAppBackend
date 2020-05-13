@@ -21,14 +21,25 @@ namespace TruckProject.Controllers
     public class TruckController : ControllerBase
     {
         private readonly ITruckLogicRepository _logicRepository;
+        private readonly AutomobileContext _context;
 
-        public TruckController(ITruckLogicRepository logicRepository,IMapper mapper)
+        public TruckController(ITruckLogicRepository logicRepository,IMapper mapper,AutomobileContext context)
         {
             _logicRepository = logicRepository ??
                 throw new ArgumentNullException(nameof(logicRepository));
-           
-        }
+            _context = context ??
+                throw new ArgumentNullException(nameof(AutomobileContext));
 
+        }
+        [HttpGet("Check")]
+        public IActionResult Get()
+        {
+            var collection = _context.Truck.Include(x => x.User).ToList();
+            return Ok(collection);
+
+
+
+        }
         [HttpGet]
         public ActionResult<IEnumerable<TruckDTO>> GetTrucks(
             [FromQuery] SearchTrucksByParameters trucksByParameters)
@@ -63,6 +74,14 @@ namespace TruckProject.Controllers
         [HttpPost]
         public ActionResult<TruckDTO> PostTruck(TruckForCreationDTO truckForCreation)
         {
+            //if(ModelState.IsValid)
+            //{
+            //    var truckToReturn = _logicRepository.CreateTruck(truckForCreation);
+            //    _logicRepository.Save();
+
+            //    return Ok(truckToReturn);
+            //}
+            //return Ok();
             var truckToReturn = _logicRepository.CreateTruck(truckForCreation);
             _logicRepository.Save();
 

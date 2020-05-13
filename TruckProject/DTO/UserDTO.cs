@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using TruckProject.Models;
 
 namespace TruckProject.DTO
 {
@@ -14,8 +15,9 @@ namespace TruckProject.DTO
         public string Role { get; set; }
         public string ImagePath { get; set; }
         public string DateOfBirth { get; set; }
-        public int Years { get; set; }
+        public int Age { get; set; }
         public string Sex { get; set; }
         public string Country { get; } = RegionInfo.CurrentRegion.EnglishName;
+        public ICollection<TruckDTO> Truck { get; set; }
     }
 }
