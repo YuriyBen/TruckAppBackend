@@ -9,5 +9,7 @@ namespace TruckProject.DTO
     {
         public string BrandSearch { get; set; }
 
+        public long UserId { get; set; }
+
     }
 }
