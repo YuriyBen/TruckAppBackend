@@ -64,8 +64,8 @@ namespace TruckProject.Controllers
             }
             var userForCreation = _mapper.Map<Users>(userFromBody);
             userForCreation.Country = RegionInfo.CurrentRegion.EnglishName;
-            //_context.Users.Add(userForCreation);
-            //_context.SaveChanges();
+            _context.Users.Add(userForCreation);
+            _context.SaveChanges();
             return Ok(_mapper.Map<UserDTO>(userForCreation));
 
         }
