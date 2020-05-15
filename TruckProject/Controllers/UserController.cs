@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -44,9 +45,12 @@ namespace TruckProject.Controllers
             {
                 return NotFound();
             }
-
             var userToReturn = _context.Users.FirstOrDefault(u => u.Email == user.Email &&
                                                              u.PasswordHash == user.Password.Encode());
+            if(userToReturn.IsActive==false)
+            {
+                throw new Exception("You are not an active user,you can't log in ..");
+            }
             return Ok(_mapper.Map<UserDTO>(userToReturn));
         }
 
@@ -60,8 +64,8 @@ namespace TruckProject.Controllers
             }
             var userForCreation = _mapper.Map<Users>(userFromBody);
             userForCreation.Country = RegionInfo.CurrentRegion.EnglishName;
-            _context.Users.Add(userForCreation);
-            _context.SaveChanges();
+            //_context.Users.Add(userForCreation);
+            //_context.SaveChanges();
             return Ok(_mapper.Map<UserDTO>(userForCreation));
 
         }
@@ -75,6 +79,27 @@ namespace TruckProject.Controllers
 
             return Ok(listToReturn);
         }
+        [HttpPut("{UserId}")]
+        public void UpdateUserStatus(long UserId,Test test)
+        {
+            if(!_context.Users.Any(u=>u.Id==UserId))
+            {
+                NotFound();
+            }
+            short status = 0;
+            if (test.IsActive == true)
+            {
+                status = 1;
+            }
+            _context.Database.ExecuteSqlRaw($"UPDATE avto.Users " +
+                                    $"SET IsActive = {status}" +
+                                    $"WHERE Id = {UserId};");
 
+        }
+    }
+
+    public class Test
+    {
+        public bool IsActive { get; set; }
     }
 }

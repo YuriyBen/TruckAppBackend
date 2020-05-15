@@ -64,7 +64,7 @@ namespace TruckProject.Entities
                 entity.ToTable("Users", "avto");
 
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Users__A9D10534286C59A1")
+                    .HasName("UQ__Users__Email")
                     .IsUnique();
 
                 entity.Property(e => e.Country)
@@ -85,6 +85,10 @@ namespace TruckProject.Entities
 
                 entity.Property(e => e.ImagePath).IsUnicode(false);
 
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(35)
@@ -92,7 +96,7 @@ namespace TruckProject.Entities
 
                 entity.Property(e => e.PasswordHash)
                     .IsRequired()
-                    .HasMaxLength(128)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RegistrationToken)
