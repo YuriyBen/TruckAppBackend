@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using TruckProject.Models;
+using TruckProject.Entities;
 using TruckProject.Services;
 
 namespace TruckProject
@@ -30,13 +30,13 @@ namespace TruckProject
         public void ConfigureServices(IServiceCollection services)
         {
             var AllowedOrigins = Configuration.GetValue<string>("AllowedOrigins")?.Split(",") ?? new string[0];
-            
-            services.AddCors(options => options.AddPolicy("GlobomenticsInternal", 
+
+            services.AddCors(options => options.AddPolicy("TruckToRia",
                              builer => builer.WithOrigins(AllowedOrigins)
                                              .AllowAnyMethod()
                                              .WithHeaders("Content-Type")
                                              .AllowCredentials()
-                                             .SetPreflightMaxAge(TimeSpan.FromMinutes(1)) ));
+                                             .SetPreflightMaxAge(TimeSpan.FromMinutes(1))));
 
             services.AddControllers(setupAction =>
             {
@@ -67,7 +67,7 @@ namespace TruckProject
 
             app.UseRouting();
 
-            app.UseCors("GlobomenticsInternal");
+            app.UseCors("TruckToRia");
 
             app.UseAuthorization();
 

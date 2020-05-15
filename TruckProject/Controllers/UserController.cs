@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -7,7 +8,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TruckProject.DTO;
+using TruckProject.Entities;
+using TruckProject.Helpers;
 using TruckProject.Models;
 using TruckProject.ResourceParameters;
 using TruckProject.Services;
@@ -37,14 +39,31 @@ namespace TruckProject.Controllers
         [HttpPost("login")]
         public ActionResult<UserDTO> GetUserAfterLogIn(UserAuthorization user)
         {
-            
-            if(!_context.Users.Any(u=>u.Email==user.Email && u.PasswordHash==user.Password))
+
+            if (!_context.Users.Any(u => u.Email == user.Email && u.PasswordHash == user.Password.Encode()))
             {
                 return NotFound();
             }
+
             var userToReturn = _context.Users.FirstOrDefault(u => u.Email == user.Email &&
-                                                             u.PasswordHash == user.Password);
+                                                             u.PasswordHash == user.Password.Encode());
             return Ok(_mapper.Map<UserDTO>(userToReturn));
+        }
+
+        [HttpPost("create")]
+        public ActionResult<UserDTO> CreateAccount(UserAuthentication userFromBody)
+        {
+
+            if (_context.Users.Any(u => u.Email == userFromBody.Email))
+            {
+                throw new Exception("There are an account with the same e-mail..");
+            }
+            var userForCreation = _mapper.Map<Users>(userFromBody);
+            userForCreation.Country = RegionInfo.CurrentRegion.EnglishName;
+            _context.Users.Add(userForCreation);
+            _context.SaveChanges();
+            return Ok(_mapper.Map<UserDTO>(userForCreation));
+
         }
 
         [HttpGet]

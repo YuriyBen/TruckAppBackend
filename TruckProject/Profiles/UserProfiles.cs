@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TruckProject.DTO;
 using TruckProject.Models;
+using TruckProject.Entities;
 using TruckProject.Helpers;
+using TruckProject.ResourceParameters;
+using System.Globalization;
 
 namespace TruckProject.Profiles
 {
@@ -26,6 +28,15 @@ namespace TruckProject.Profiles
                 //.ForMember(
                 //    dest => dest.Truck,
                 //    opt => opt.MapFrom(src => src.Truck))
+                ;
+
+            CreateMap<UserAuthentication, Users>()
+                .ForMember(
+                    dest => dest.PasswordHash,
+                    opt => opt.MapFrom(src => src.Password.Encode()) )
+                .ForMember(
+                    dest=>dest.RegistrationToken,
+                    opt => opt.MapFrom(src => $"{src.LastName + " "+ src.FirstName}".GenerateToken()))
                 ;
         }
     }

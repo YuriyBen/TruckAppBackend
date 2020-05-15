@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TruckProject.DTO;
-using TruckProject.Helpers;
 using TruckProject.Models;
+using TruckProject.Helpers;
+using TruckProject.Entities;
 
 namespace TruckProject.Profiles
 {

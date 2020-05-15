@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace TruckProject.Models
+namespace TruckProject.Entities
 {
     public partial class AutomobileContext : DbContext
     {

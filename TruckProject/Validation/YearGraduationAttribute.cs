@@ -8,7 +8,7 @@ namespace TruckProject.Validation
 {
     public class YearGraduationAttribute:RangeAttribute
     {
-        public YearGraduationAttribute():base(0,DateTime.Now.Year)
+        public YearGraduationAttribute():base(1900,DateTime.Now.Year)
         {
             ErrorMessageResourceType = typeof(ValidationMessages);
             ErrorMessageResourceName = "CarYear";

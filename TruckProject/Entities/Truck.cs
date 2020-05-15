@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TruckProject.Models
+namespace TruckProject.Entities
 {
     public partial class Truck
     {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TruckProject.Validation
 {
-    public class OnlyCharactersAttribute:RegularExpressionAttribute
+    public class WithoutSymbolsAttribute:RegularExpressionAttribute
     {
-        public OnlyCharactersAttribute():base(@"^[a-zA-Z]+$")
+        public WithoutSymbolsAttribute():base(@"^[a-zA-Z 0-9]+$")
         {
             ErrorMessageResourceType = typeof(ValidationMessages);
             ErrorMessageResourceName = "Characters";

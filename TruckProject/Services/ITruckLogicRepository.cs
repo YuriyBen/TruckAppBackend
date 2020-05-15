@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TruckProject.DTO;
 using TruckProject.Models;
 using TruckProject.ResourceParameters;
 

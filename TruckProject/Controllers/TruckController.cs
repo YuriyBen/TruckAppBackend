@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using TruckProject.DTO;
-using TruckProject.Helpers;
 using TruckProject.Models;
+using TruckProject.Helpers;
+using TruckProject.Entities;
 using TruckProject.ResourceParameters;
 using TruckProject.Services;
 
@@ -36,10 +36,8 @@ namespace TruckProject.Controllers
         {
             var collection = _context.Truck.Include(x => x.User).ToList();
             return Ok(collection);
-
-
-
         }
+
         [HttpGet]
         public ActionResult<IEnumerable<TruckDTO>> GetTrucks(
             [FromQuery] SearchTrucksByParameters trucksByParameters)

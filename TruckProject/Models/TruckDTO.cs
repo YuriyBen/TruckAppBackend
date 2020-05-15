@@ -6,7 +6,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using TruckProject.Models;
 
-namespace TruckProject.DTO
+namespace TruckProject.Models
 {
     public class TruckDTO:TruckForManipulationDTO
     {
