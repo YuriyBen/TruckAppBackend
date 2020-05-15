@@ -17,7 +17,7 @@ namespace TruckProject.ResourceParameters
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
         public string ImagePath { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; } //mm-dd-yy
         public string Sex { get; set; }
         public string Role { get; set; } = "user";
     }

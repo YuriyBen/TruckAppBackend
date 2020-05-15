@@ -19,6 +19,9 @@ namespace TruckProject.Models
         public int Age { get; set; }
         public string Sex { get; set; }
         public string Country { get; } = RegionInfo.CurrentRegion.EnglishName;
+        public string RegistrationToken { get; set; }
+        public string PasswordHash { get; set; }
+
 
         public  ICollection<TruckDTO> Truck { get; set; }
     }
