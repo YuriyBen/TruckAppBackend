@@ -80,14 +80,14 @@ namespace TruckProject.Controllers
             return Ok(listToReturn);
         }
         [HttpPut("{UserId}")]
-        public void UpdateUserStatus(long UserId,Test test)
+        public void UpdateUserStatus(long UserId,Status check)
         {
             if(!_context.Users.Any(u=>u.Id==UserId))
             {
                 NotFound();
             }
             short status = 0;
-            if (test.IsActive == true)
+            if (check.IsActive == true)
             {
                 status = 1;
             }
@@ -98,7 +98,7 @@ namespace TruckProject.Controllers
         }
     }
 
-    public class Test
+    public class Status
     {
         public bool IsActive { get; set; }
     }
