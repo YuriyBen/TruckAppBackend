@@ -36,6 +36,16 @@ namespace TruckProject.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult<IEnumerable<UserDTO>> GettAllUsers()
+        {
+            var usersList = _context.Users.Include(x => x.Truck).Where(u => u.Role != "admin").ToList();
+
+            var listToReturn = _mapper.Map<IEnumerable<UserDTO>>(usersList);
+
+            return Ok(listToReturn);
+        }
+
         //[HttpGet()]
         [HttpPost("login")]
         public ActionResult<UserDTO> GetUserAfterLogIn(UserAuthorization user)
@@ -70,15 +80,7 @@ namespace TruckProject.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<UserDTO>> GettAllUsers()
-        {
-            var usersList = _context.Users.Include(x=>x.Truck).Where(u => u.Role != "admin").ToList();
-
-            var listToReturn = _mapper.Map<IEnumerable<UserDTO>>(usersList);
-
-            return Ok(listToReturn);
-        }
+        
         [HttpPut("{UserId}")]
         public void UpdateUserStatus(long UserId,Status check)
         {

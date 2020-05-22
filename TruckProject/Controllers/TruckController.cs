@@ -31,13 +31,6 @@ namespace TruckProject.Controllers
                 throw new ArgumentNullException(nameof(AutomobileContext));
 
         }
-        [HttpGet("Check")]
-        public IActionResult Get()
-        {
-            var collection = _context.Truck.Include(x => x.User).ToList();
-            return Ok(collection);
-        }
-
         [HttpGet]
         public ActionResult<IEnumerable<TruckDTO>> GetTrucks(
             [FromQuery] SearchTrucksByParameters trucksByParameters)
@@ -98,9 +91,8 @@ namespace TruckProject.Controllers
             
 
             _logicRepository.UpdateTruck(TruckId, truck);
-            //_logicRepository.Save();
+            _logicRepository.Save();
 
-            //return Ok(truckToReturn);
         }
 
     }

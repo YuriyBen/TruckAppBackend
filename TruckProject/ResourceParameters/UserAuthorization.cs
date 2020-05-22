@@ -11,7 +11,7 @@ namespace TruckProject.ResourceParameters
     {
         [EmailAddress]
         public string Email { get; set; }
-        [PasswordValidation]
+        //[PasswordValidation]
         public string Password { get; set; }
 
     }
